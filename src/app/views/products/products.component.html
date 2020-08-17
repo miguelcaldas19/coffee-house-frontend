@@ -1,0 +1,120 @@
+<div class="card border-light shadow-lg m-5">
+    <div class="card-body">
+        <h4 class="card-title ml-3 mb-5">List of products</h4>
+
+        <div>
+            <form class="form-inline" novalidate>
+                
+                <div class="col-auto">
+                    <button type="button" class="btn btn-info mb-4 rounded-circle" (click)="onEdit(null, content)" *ngIf="managerRole">
+                        <fa-icon [icon]="['fas', 'plus']" ></fa-icon>
+                    </button>
+                    <button type="button" class="btn btn-info ml-1 mb-4 rounded-circle" (click)="onDownload()" [disabled]="returnListProducts.length === 0">
+                        <fa-icon [icon]="['fas', 'file-excel']" ></fa-icon>
+                    </button>
+                </div>
+            </form>
+
+            <div class="row m-0">
+                <div class="col-12">
+                    <table id="products-list" class="table bg-white">
+                        <thead>
+                            <tr class="row m-0">
+                                <th scope="col" class="col-2"></th>
+                                <th scope="col" class="col-2">Name</th>
+                                <th scope="col" class="col-4">Description</th>
+                                <th scope="col" class="col-2">Quantity</th>
+                                <th scope="col" class="col-2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr class="row m-0" *ngFor="let item of returnListProducts; let i = index">
+                                <td class="col-2"><img class="products-image" [src]=item.image></td>
+                                <td class="col-2">{{ item.name }}</td>
+                                <td class="col-4">{{ item.description }}</td>
+                                <td class="col-2">{{ item.quantity }}</td>
+                                <td class="col-2">
+
+                                    <button type="button" class="btn btn-transparent btn-sm" (click)="onUploadImage(item, imageContent)">
+                                        <fa-icon [icon]="['fas', 'images']" class="text-primary"></fa-icon>
+                                    </button>
+                                    <button type="button" class="btn btn-transparent btn-sm" (click)="onEdit(item, content)">
+                                        <fa-icon [icon]="['fas', 'edit']" class="text-primary"></fa-icon>
+                                    </button>
+                                    <button type="button" class="btn btn-transparent btn-sm" (click)="onRemove(item.id)" *ngIf="managerRole">
+                                        <fa-icon [icon]="['fas', 'trash-alt']" class="text-danger"></fa-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header bg-light">
+        <h4 class="modal-title">Product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="registerForm">
+            <div class="form-group">
+                <label class="col-form-label" isRequired>Name</label>
+                <input type="text" class="form-control" name="name" formControlName="name">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label">Description</label>
+                <textarea class="form-control" name="description" formControlName="description"> </textarea>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label">Category</label>
+                <select  class="form-control" name="category" formControlName="category">
+                    <option *ngFor="let item of returnListCategories" [value]="item.id">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label" isRequired>Quantity</label>
+                <input type="number" class="form-control" name="quantity" formControlName="quantity">
+            </div>
+            
+        </form>
+
+        <div class="alert alert-danger" *ngIf="errorMessage">
+            {{ errorMessage }}
+         </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSave(modal)" [disabled]="!registerForm.valid">Save</button>
+    </div>
+</ng-template>
+
+<ng-template #imageContent let-modal>
+    <div class="modal-header bg-light">
+        <h4 class="modal-title">Upload image</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container row">
+            <div class="col-md-6">
+                <input type="file" (change)="onFileChanged($event)">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSendImage(modal)" [disabled]="!selectedFile">Upload</button>
+    </div>
+</ng-template>

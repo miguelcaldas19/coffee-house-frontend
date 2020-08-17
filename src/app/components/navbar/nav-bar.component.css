@@ -1,0 +1,7 @@
+.dropdown-toggle::after {
+    color: #17a2b8;
+}
+
+.logout {
+    cursor: pointer;
+}

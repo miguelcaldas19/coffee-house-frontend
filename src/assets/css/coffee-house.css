@@ -1,0 +1,22 @@
+.simple-text {
+  color: white;
+}
+
+.line-separator {
+  color: rgb(107, 119, 140);
+  padding-top: 16px;
+  margin-top: 32px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  border-top: 1px solid rgb(213, 216, 222);
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.products-image {
+  max-height: 60px;
+}

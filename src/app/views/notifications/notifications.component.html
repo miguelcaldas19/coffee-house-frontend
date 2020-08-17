@@ -1,0 +1,38 @@
+<div class="card border-light shadow-lg m-5">
+    <div class="card-body">
+        <h4 class="card-title ml-3 mb-5">List of notifications</h4>
+
+        <div>
+            <div class="row m-0">
+                <div class="col-12">
+                    <table id="products-list" class="table table-sm bg-white">
+                        <thead>
+                            <tr class="row m-0">
+                                
+                                <th scope="col" class="col-7">Description</th>
+                                <th scope="col" class="col-3">Responsible</th>
+                                <th scope="col" class="col-2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr class="row m-0" *ngFor="let item of list; let i = index">
+                                
+                                <td class="col-7">{{ item.description }}</td>
+                                <td class="col-3">{{ item.createdBy }}</td>
+                                <td class="col-2">
+
+                                    <button type="button" class="btn btn-transparent btn-sm" (click)="onRemove(item.id)">
+                                        <fa-icon [icon]="['fas', 'trash-alt']" class="text-danger"></fa-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
